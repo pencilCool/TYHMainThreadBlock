@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B304D4712293754E002C33E7 /* TYHMainThreadBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B304D4702293754E002C33E7 /* TYHMainThreadBlock.swift */; };
 		B3BB3DCB2293704700DE432E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BB3DCA2293704700DE432E /* AppDelegate.swift */; };
 		B3BB3DCD2293704700DE432E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BB3DCC2293704700DE432E /* ViewController.swift */; };
 		B3BB3DD02293704700DE432E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3BB3DCE2293704700DE432E /* Main.storyboard */; };
@@ -26,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B304D4702293754E002C33E7 /* TYHMainThreadBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TYHMainThreadBlock.swift; sourceTree = "<group>"; };
 		B3BB3DC72293704700DE432E /* TYHMainThreadBlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TYHMainThreadBlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3BB3DCA2293704700DE432E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B3BB3DCC2293704700DE432E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 			children = (
 				B3BB3DCA2293704700DE432E /* AppDelegate.swift */,
 				B3BB3DCC2293704700DE432E /* ViewController.swift */,
+				B304D4702293754E002C33E7 /* TYHMainThreadBlock.swift */,
 				B3BB3DCE2293704700DE432E /* Main.storyboard */,
 				B3BB3DD12293704800DE432E /* Assets.xcassets */,
 				B3BB3DD32293704800DE432E /* LaunchScreen.storyboard */,
@@ -199,6 +202,7 @@
 			files = (
 				B3BB3DCD2293704700DE432E /* ViewController.swift in Sources */,
 				B3BB3DCB2293704700DE432E /* AppDelegate.swift in Sources */,
+				B304D4712293754E002C33E7 /* TYHMainThreadBlock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
