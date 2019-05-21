@@ -9,7 +9,30 @@
 import Foundation
 class TYHMainThreadBlock {
     static let shared = TYHMainThreadBlock()
+    var semaphore:DispatchSemaphore!
+    var runLoopObserver:CFRunLoopObserver!
     
+    func beginMonitor() {
+        let unmanaged = Unmanaged.passRetained(self)
+        let uptr = unmanaged.toOpaque()
+        let vptr = UnsafeMutableRawPointer(uptr)
     
+        semaphore =  DispatchSemaphore.init(value: 0)
+        var context = CFRunLoopObserverContext.init()
+        context.version = 0
+        context.info = vptr
+
+        runLoopObserver = CFRunLoopObserverCreate(nil, CFRunLoopActivity.beforeTimers.rawValue, true, 0, {
+            (observer ,activety,info) in
+            
+        }, &context)
+    }
+    
+    func callBackObserver() -> CFRunLoopObserverCallBack {
+        return {
+            (observer ,activiy,context) in
+            
+        }
+    }
     
 }
