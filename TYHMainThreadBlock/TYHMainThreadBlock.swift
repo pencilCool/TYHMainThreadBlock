@@ -17,8 +17,8 @@ class TYHMainThreadBlock {
         let uptr = unmanaged.toOpaque()
         let vptr = UnsafeMutableRawPointer(uptr)
     
-        semaphore =  DispatchSemaphore.init(value: 0)
-        var context = CFRunLoopObserverContext.init()
+        semaphore =  DispatchSemaphore(value: 0)
+        var context = CFRunLoopObserverContext()
         context.version = 0
         context.info = vptr
 
@@ -26,6 +26,8 @@ class TYHMainThreadBlock {
             (observer ,activety,info) in
             
         }, &context)
+        
+        CFRunLoopAddObserver(CFRunLoopGetMain(), runLoopObserver, CFRunLoopMode.commonModes)
     }
     
     func callBackObserver() -> CFRunLoopObserverCallBack {
