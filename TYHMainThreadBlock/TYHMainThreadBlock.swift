@@ -28,46 +28,55 @@ class TYHMainThreadBlock {
     var runLoopActivity:CFRunLoopActivity!
     
     func beginMonitor() {
+        
         let unmanaged = Unmanaged.passRetained(self)
         let uptr = unmanaged.toOpaque()
         let vptr = UnsafeMutableRawPointer(uptr)
-    
+        
         semaphore =  DispatchSemaphore(value: 0)
         var context = CFRunLoopObserverContext()
         context.version = 0
         context.info = vptr
 
-        runLoopObserver = CFRunLoopObserverCreate(nil, CFRunLoopActivity.beforeTimers.rawValue, true, 0, {
-            (observer ,activity,context) in
-            let weakSelf = Unmanaged<TYHMainThreadBlock>.fromOpaque(context!).takeUnretainedValue()
-            weakSelf.runLoopActivity = activity
-            weakSelf.semaphore.signal()
-            
-        },&context)
+        runLoopObserver = CFRunLoopObserverCreate(nil, CFRunLoopActivity.beforeTimers.rawValue, true, 0,callBackObserve(),&context)
         
         CFRunLoopAddObserver(CFRunLoopGetMain(), runLoopObserver, CFRunLoopMode.commonModes)
         
-        DispatchQueue.global().async {
-            switch self.semaphore.wait(timeout: 3) {
-            case .timedOut:
-                guard let _ = self.runLoopObserver else {
-                 
-                    return
+        let queue = DispatchQueue.global()
+        queue.async {
+            while true {
+                switch self.semaphore.wait(timeout: 0.03) {
+                case .timedOut:
+                    guard let _ = self.runLoopObserver else {
+                        return
+                    }
+                    
+                    if  self.runLoopActivity == .beforeSources ||
+                        self.runLoopActivity == .afterWaiting {
+                        print("monitor trigger")
+                    }
+                    
+                    print("timeout")
+                case .success:
+                    print("success")
                 }
-                
-                if  self.runLoopActivity == .beforeSources ||
-                    self.runLoopActivity == .afterWaiting {
-                    print("monitor trigger")
-                }
-
-                print("timeout")
-            case .success:
-                print("success")
             }
-            
+           
         }
     }
 
-
-
+    func removeRunloopObserver(){
+        if runLoopObserver == nil {
+            return
+        }
+        CFRunLoopRemoveObserver(CFRunLoopGetCurrent(), runLoopObserver, CFRunLoopMode.commonModes)
+    }
+    
+    private func callBackObserve() -> CFRunLoopObserverCallBack {
+        return{ (observer, activity, context) in
+            let weakSelf = Unmanaged<TYHMainThreadBlock>.fromOpaque(context!).takeUnretainedValue()
+            weakSelf.runLoopActivity = activity
+            weakSelf.semaphore.signal()
+        }
+    }
 }

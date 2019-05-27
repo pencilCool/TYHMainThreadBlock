@@ -32,7 +32,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
     func doSomeHardTing() {
-        usleep(1000 * 100)
+        usleep(1000 * 30)
     }
     
 
